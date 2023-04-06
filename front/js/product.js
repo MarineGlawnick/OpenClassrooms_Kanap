@@ -7,30 +7,30 @@ function retrieveData() {
         .then((response) => response.json())
         .then((data) => {
             /*render image*/
-            let kanapImage = document.getElementsByClassName('item__img')[0];
-            let imageElement = document.createElement('img');
+            const kanapImage = document.getElementsByClassName('item__img')[0];
+            const imageElement = document.createElement('img');
             imageElement.src = data.imageUrl;
             imageElement.alt = data.altTxt;
             kanapImage.appendChild(imageElement);
 
             /*render title*/
-            let kanapName = document.getElementById('title');
-            let contentName = document.createTextNode(data.name);
+            const kanapName = document.getElementById('title');
+            const contentName = document.createTextNode(data.name);
             kanapName.appendChild(contentName);
 
             /*render description*/
-            let kanapDescription = document.getElementById('description');
-            let contentDescription = document.createTextNode(data.description);
+            const kanapDescription = document.getElementById('description');
+            const contentDescription = document.createTextNode(data.description);
             kanapDescription.appendChild(contentDescription);
 
             /*render price*/
-            let kanapPrice = document.getElementById('price');
-            let contentPrice = document.createTextNode(data.price);
+            const kanapPrice = document.getElementById('price');
+            const contentPrice = document.createTextNode(data.price);
             kanapPrice.appendChild(contentPrice);
 
             /*render colors*/
-            let kanapColors = document.getElementById('colors');
-            let colors = data.colors;
+            const kanapColors = document.getElementById('colors');
+            const colors = data.colors;
             for (let color in colors) {
                 let options = document.createElement('option')
                 options.value = colors[color];

@@ -36,76 +36,27 @@ function displayCart() {
             // display each product in the array productSelected
             for (let j in productsSelected) {
                 const cartItems = document.getElementById('cart__items')
-                //create article
-                const cartItem = document.createElement("article")
-                cartItem.classList.add("cart__item")
-                cartItem.setAttribute("data-id", `${productsSelected[j].id}`)
-                cartItem.setAttribute("data-color", `${productsSelected[j].color}`)
-                cartItems.appendChild(cartItem)
-
-                // create images
-                const imgItem = document.createElement('div')
-                imgItem.classList.add('cart__item__img')
-                cartItem.appendChild(imgItem)
-                const image = document.createElement('img')
-                image.setAttribute("src", productsSelected[j].img)
-                image.setAttribute("alt", productsSelected[j].imgAlt)
-                imgItem.appendChild(image)
-
-                // create product information section
-                const productContent = document.createElement("div")
-                productContent.classList.add("cart__item__content")
-                cartItem.appendChild(productContent)
-                const productDescription = document.createElement("div")
-                productDescription.classList.add("cart__item__content__description")
-                productContent.appendChild(productDescription)
-
-                //create name product
-                const title = document.createElement("h2")
-                title.textContent = productsSelected[j].name;
-                productDescription.appendChild(title)
-
-                //display color of the product selected
-                const color = document.createElement('p')
-                color.textContent = productsSelected[j].color;
-                productDescription.appendChild(color)
-
-                //display price of the product selected
-                const price = document.createElement('p')
-                price.textContent = productsSelected[j].price + " €";
-                productDescription.appendChild(price)
-
-                // create setting container
-                const settings = document.createElement("div")
-                settings.classList.add("cart__item__content__settings")
-                productContent.appendChild(settings)
-
-                //create quantity container
-                const quantity = document.createElement("div")
-                quantity.classList.add("cart__item__content__settings__quantity")
-                settings.appendChild(quantity)
-
-                // display quantity title
-                const quantityTitle = document.createElement("p")
-                quantityTitle.textContent = "Qté:"
-                quantity.appendChild(quantityTitle)
-
-                // show quantity selected
-                const quantityNumber = document.createElement("input")
-                quantityNumber.classList.add("itemQuantity")
-                quantityNumber.setAttribute("value", productsSelected[j].quantity)
-                quantity.appendChild(quantityNumber)
-
-                // create delete setting container
-                const deleteProduct = document.createElement("div")
-                deleteProduct.classList.add("cart__item__content__settings__delete")
-                settings.appendChild(deleteProduct)
-
-                //display delete button
-                const deleteButton = document.createElement("p")
-                deleteButton.classList.add("deleteItem")
-                deleteButton.textContent = "Supprimer"
-                deleteProduct.appendChild(deleteButton)
+                cartItems.innerHTML += `<article class="cart__item" data-id='${productsSelected[j].id}' data-color='${productsSelected[j].color}'>
+                <div class="cart__item__img">
+                  <img src="${productsSelected[j].img}" alt="${productsSelected[j].imgAlt}">
+                </div>
+                <div class="cart__item__content">
+                  <div class="cart__item__content__description">
+                    <h2>${productsSelected[j].name}</h2>
+                    <p>${productsSelected[j].color}</p>
+                    <p>${productsSelected[j].price} €</p>
+                  </div>
+                  <div class="cart__item__content__settings">
+                    <div class="cart__item__content__settings__quantity">
+                      <p>Qté : </p>
+                      <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${productsSelected[j].quantity}">
+                    </div>
+                    <div class="cart__item__content__settings__delete">
+                      <p class="deleteItem">Supprimer</p>
+                    </div>
+                  </div>
+                </div>
+              </article> `
             }
             displayTotal(productsSelected)
         })
