@@ -1,5 +1,5 @@
 // retrieve the localStorage
-const cart = JSON.parse(localStorage.getItem("cart"));
+var cart = JSON.parse(localStorage.getItem("cart")) ?? [];
 const apiRoute = `http://localhost:3000/api/products`
 
 //Initialise the cart at 0
@@ -78,6 +78,7 @@ function addEventsHandler(products) {
 			let itemToRemove = deleteItemContainer[index].closest('.cart__item')
 			products.splice(index, 1)
 			itemToRemove.remove()
+			cart = products;
 			localStorage.setItem('cart', JSON.stringify(products))
 			displayTotal(products)
 
@@ -90,6 +91,7 @@ function addEventsHandler(products) {
 	quantityItemContainer.forEach((item, index) => {
 		item.addEventListener("change", function (event) {
 			products[index].quantity = parseInt(event.target.value)
+			cart = products;
 			localStorage.setItem('cart', JSON.stringify(products))
 			displayTotal(products)
 
@@ -158,7 +160,11 @@ buttonOrder.addEventListener('click', (event) => {
 		emailErrorMsg.innerHTML = "Veuillez renseigner une adresse mail valide"
 	}
 
-	if (!isError && cart != null) {
+	if (cart.length === 0) {
+		alert("Votre panier est vide")
+	}
+
+	if (!isError && (cart && cart.length > 0)) {
 
 		let contact = {
 			firstName: firstNameInput.value,
