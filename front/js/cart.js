@@ -37,6 +37,7 @@ function displayCart() {
 					}
 				}
 			});
+
 			// display each product in the array productSelected
 			for (let j in productsSelected) {
 				const cartItems = document.getElementById('cart__items')
@@ -62,7 +63,6 @@ function displayCart() {
                 </div>
               </article> `
 			}
-
 			displayTotal(productsSelected)
 			addEventsHandler(productsSelected)
 		})
@@ -72,7 +72,7 @@ function displayCart() {
 function addEventsHandler(products) {
 	let deleteItemContainer = [...document.getElementsByClassName('deleteItem')];
 
-	// allow people to change the quantity
+	//allow people to remove an article from the cart
 	deleteItemContainer.forEach((item, index) => {
 		item.addEventListener('click', function (event) {
 			let itemToRemove = deleteItemContainer[index].closest('.cart__item')
@@ -87,7 +87,7 @@ function addEventsHandler(products) {
 
 	let quantityItemContainer = [...document.getElementsByClassName('itemQuantity')];
 
-	//allow people to remove an article from the cart
+	// allow people to change the quantity
 	quantityItemContainer.forEach((item, index) => {
 		item.addEventListener("change", function (event) {
 			products[index].quantity = parseInt(event.target.value)
@@ -103,7 +103,8 @@ function addEventsHandler(products) {
 function displayTotal(filteredCart) {
 	let totalQuantity = 0;
 	let totalPrice = 0;
-	filteredCart.forEach((element, index) => {
+	// retrieve each products and calculate the price
+	filteredCart.forEach((element) => {
 		totalQuantity += parseInt(element.quantity)
 		totalPrice += parseInt(element.price * element.quantity)
 	})
@@ -135,6 +136,7 @@ buttonOrder.addEventListener('click', (event) => {
 
 	let isError = false;
 
+	// check if every inputs are good, if they are not, it displays an error message
 	if (globalRegex.test(firstNameInput.value) === false) {
 		isError = true;
 		firstNameErrorMsg.innerHTML = "Veuillez rentrer un prénom valide"
@@ -165,7 +167,7 @@ buttonOrder.addEventListener('click', (event) => {
 	}
 
 	if (!isError && (cart && cart.length > 0)) {
-
+		// retrieve client information
 		let contact = {
 			firstName: firstNameInput.value,
 			lastName: nameInput.value,
@@ -174,14 +176,15 @@ buttonOrder.addEventListener('click', (event) => {
 			email: mailInput.value,
 		}
 
+		// retrieve the products in the cart
 		let products = [];
-
 		for (let kanap of cart) {
 			products.push(kanap.id);
 		}
 
 		let payload = { contact, products }
 
+		// send the order to the API and display order ID into URL
 		fetch(apiRoute + `/order`, {
 			method: "POST",
 			headers: {
