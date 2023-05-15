@@ -90,7 +90,13 @@ function addEventsHandler(products) {
 	// allow people to change the quantity
 	quantityItemContainer.forEach((item, index) => {
 		item.addEventListener("change", function (event) {
-			products[index].quantity = parseInt(event.target.value)
+
+			if (event.target.value <= 0) {
+				products[index].quantity = parseInt(0)
+			} else {
+				products[index].quantity = parseInt(event.target.value)
+			}
+			
 			cart = products;
 			localStorage.setItem('cart', JSON.stringify(products))
 			displayTotal(products)
